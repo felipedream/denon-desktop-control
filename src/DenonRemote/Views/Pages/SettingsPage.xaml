@@ -1,0 +1,141 @@
+﻿<pages:PageBase
+    x:Class="DenonRemote.Views.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:DenonRemote.Views.Pages"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    mc:Ignorable="d">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24" MaxWidth="700">
+
+            <!-- ── Settings ────────────────────────────────────────────── -->
+            <TextBlock x:Name="TitleText" Style="{StaticResource H1}" />
+            <TextBlock
+                Margin="0,4,0,20"
+                Style="{StaticResource Subtitle}"
+                Text="%LocalAppData%\DenonRemote" />
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="AutoConnLabel" FontSize="14" FontWeight="SemiBold" />
+                        <TextBlock x:Name="AutoConnDesc" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                    </StackPanel>
+                    <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding Settings.AutoConnect, Mode=TwoWay}" />
+                </Grid>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="TrayLabel" FontSize="14" FontWeight="SemiBold" />
+                        <TextBlock x:Name="TrayDesc" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                    </StackPanel>
+                    <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding Settings.CloseToTray, Mode=TwoWay}" />
+                </Grid>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="MinLabel" FontSize="14" FontWeight="SemiBold" />
+                        <TextBlock x:Name="MinDesc" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                    </StackPanel>
+                    <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding Settings.StartMinimized, Mode=TwoWay}" />
+                </Grid>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="UpdateLabel" FontSize="14" FontWeight="SemiBold" />
+                        <TextBlock x:Name="UpdateDesc" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                    </StackPanel>
+                    <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding Settings.AutoUpdate, Mode=TwoWay}" />
+                </Grid>
+            </Border>
+
+            <!-- ── About ───────────────────────────────────────────────── -->
+            <Border Margin="0,24,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource H2}" Text="DenonRemote" />
+                    <TextBlock
+                        Margin="0,6,0,0"
+                        FontSize="13"
+                        Foreground="{StaticResource TextSecondaryBrush}"
+                        x:Name="FreeVersionText" />
+                    <TextBlock
+                        Margin="0,4,0,0"
+                        FontSize="12"
+                        Foreground="{StaticResource TextTertiaryBrush}">
+                        <Run x:Name="VersionRun" /> · .NET 8 · WPF
+                    </TextBlock>
+
+                    <Separator Margin="0,16,0,16" />
+
+                    <TextBlock FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" x:Name="CreatedByLabel" />
+                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Felipe" />
+                    <TextBlock FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" Text="Buin, Santiago de Chile" />
+
+                    <StackPanel Margin="0,16,0,0" Orientation="Horizontal">
+                        <ui:Button
+                            x:Name="TelegramBtn"
+                            Margin="0,0,10,0"
+                            Click="OnTelegramClick"
+                            Content="Telegram @felipedream"
+                            Icon="{ui:SymbolIcon ArrowSync24}" />
+                        <ui:Button
+                            x:Name="DonateBtn"
+                            Appearance="Primary"
+                            Click="OnDonateClick"
+                            Icon="{ui:SymbolIcon Heart24}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Update banner (only visible when an update is available) -->
+            <Border
+                Margin="0,0,0,12"
+                Style="{StaticResource InsetCard}"
+                Visibility="{Binding AvailableUpdate, Converter={StaticResource NotNullToBool}}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}">
+                            <Run x:Name="UpdateAvailRun" />
+                            <Run Text="{Binding AvailableUpdate.Version}" />
+                        </TextBlock>
+                        <TextBlock FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" Text="{Binding AvailableUpdate.Notes}" />
+                    </StackPanel>
+                    <ui:Button
+                        Grid.Column="1"
+                        Appearance="Primary"
+                        Click="OnUpdateClick"
+                        Content="Download"
+                        Icon="{ui:SymbolIcon ArrowSync24}" />
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</pages:PageBase>

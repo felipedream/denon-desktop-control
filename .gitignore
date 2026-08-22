@@ -1,0 +1,30 @@
+# Build output
+bin/
+obj/
+publish/
+*.user
+*.suo
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.sln.DotSettings.user
+
+# NuGet
+packages/
+*.nupkg
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Crash logs
+*.log
+
+# Local settings (user-specific, not source-controlled)
+# AppSettings are stored in %LOCALAPPDATA%\DenonRemote
+
+# Updates (ZIP is too large for git — use GitHub Releases)
+updates/denon/*.zip

@@ -1,0 +1,147 @@
+﻿<pages:PageBase
+    x:Class="DenonRemote.Views.Pages.SourcesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:DenonRemote.Views.Pages"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    mc:Ignorable="d">
+
+    <pages:PageBase.Resources>
+        <Style x:Key="SurroundBtn" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource Surface2Brush}" />
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource CardBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="14,10" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="Root"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                                <Setter TargetName="Root" Property="Background" Value="{StaticResource Surface1Brush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </pages:PageBase.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24" MaxWidth="1000">
+            <TextBlock Style="{StaticResource H1}" Text="Fuentes" />
+            <TextBlock Margin="0,4,0,20" Style="{StaticResource Subtitle}" Text="Selecciona una fuente para la zona principal." />
+
+            <!-- Live sources from the receiver (includes renames, excludes hidden) -->
+            <ItemsControl ItemsSource="{Binding State.Sources}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Width="170"
+                            Height="100"
+                            Margin="0,0,10,10"
+                            Background="{StaticResource Surface1Brush}"
+                            BorderBrush="{StaticResource CardBorderBrush}"
+                            BorderThickness="1"
+                            Click="OnSourceClick"
+                            Cursor="Hand"
+                            Tag="{Binding Token}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border
+                                        x:Name="Root"
+                                        Padding="14"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="12">
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                FontSize="16"
+                                                FontWeight="Bold"
+                                                Foreground="{StaticResource TextPrimaryBrush}"
+                                                Text="{Binding Caption}"
+                                                TextAlignment="Center"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <TextBlock
+                                                Margin="0,4,0,0"
+                                                HorizontalAlignment="Center"
+                                                FontSize="11"
+                                                Foreground="{StaticResource TextTertiaryBrush}"
+                                                Text="{Binding Token}" />
+                                        </StackPanel>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                                            <Setter TargetName="Root" Property="Background" Value="{StaticResource Surface2Brush}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Surround Mode Selector -->
+            <TextBlock Margin="0,24,0,0" Style="{StaticResource H1}" Text="Modo Surround" />
+            <TextBlock Margin="0,4,0,16" Style="{StaticResource Subtitle}" Text="Selecciona el modo de procesamiento de audio." />
+
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource Caption}" Text="MODO ACTUAL" />
+                    <TextBlock
+                        Margin="0,0,0,16"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource AccentBrush}"
+                        Text="{Binding State.SurroundMode}" />
+
+                    <WrapPanel Orientation="Horizontal">
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Stereo" Tag="STEREO" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Direct" Tag="DIRECT" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Pure Direct" Tag="PURE DIRECT" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Auto" Tag="AUTO" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Multi Ch Stereo" Tag="MCH STEREO" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Multi Ch In" Tag="M CH IN" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Multi In + DSurr" Tag="M CH IN+DS" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Multi In + Neural:X" Tag="M CH IN+NEURAL:X" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Multi In + Virtual:X" Tag="M CH IN+VIRTUAL" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Movie" Tag="MOVIE" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Music" Tag="MUSIC" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Game" Tag="GAME" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Video Game" Tag="VIDEO GAME" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Rock Arena" Tag="ROCK ARENA" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Jazz Club" Tag="JAZZ CLUB" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Matrix" Tag="MATRIX" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Mono Movie" Tag="MONO MOVIE" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="Dolby Surround" Tag="DOLBY SURROUND" Style="{StaticResource SurroundBtn}" />
+                        <Button Margin="0,0,8,8" Click="OnSurroundClick" Content="DTS Neural:X" Tag="NEURAL:X" Style="{StaticResource SurroundBtn}" />
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</pages:PageBase>

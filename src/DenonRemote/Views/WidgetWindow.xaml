@@ -1,0 +1,154 @@
+﻿<ui:FluentWindow
+    x:Class="DenonRemote.Views.WidgetWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="DENON Desktop Control"
+    Width="340"
+    Height="280"
+    AllowsTransparency="False"
+    Background="#CC0E1015"
+    ExtendsContentIntoTitleBar="True"
+    FontFamily="Segoe UI Variable, Segoe UI"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    Topmost="True"
+    WindowBackdropType="Acrylic"
+    WindowCornerPreference="Round"
+    WindowStartupLocation="Manual"
+    WindowStyle="None">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header: name + power -->
+        <Grid Grid.Row="0" Margin="0,0,0,14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock
+                    FontSize="16"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="{Binding State.FriendlyName}" />
+                <TextBlock
+                    FontSize="11"
+                    Foreground="{StaticResource TextTertiaryBrush}"
+                    Text="{Binding State.Main.SourceFriendly}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <ui:Button
+                    Margin="0,0,6,0"
+                    Command="{Binding MuteToggleCommand}"
+                    Icon="{ui:SymbolIcon SpeakerMute24}"
+                    ToolTip="Mute" />
+                <ui:Button
+                    Appearance="Primary"
+                    Command="{Binding PowerToggleCommand}"
+                    Icon="{ui:SymbolIcon Power24}"
+                    ToolTip="Power" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Volume -->
+        <Grid Grid.Row="1" Margin="0,0,0,14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="50" />
+            </Grid.ColumnDefinitions>
+            <ui:SymbolIcon
+                Foreground="{StaticResource TextSecondaryBrush}"
+                Symbol="Speaker224"
+                VerticalAlignment="Center" />
+            <Slider
+                Grid.Column="1"
+                Margin="10,0"
+                VerticalAlignment="Center"
+                IsMoveToPointEnabled="True"
+                LargeChange="5"
+                Maximum="150"
+                Minimum="0"
+                SmallChange="0.5"
+                Value="{Binding State.Main.Volume, Mode=TwoWay, Delay=200}" />
+            <TextBlock
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                FontSize="18"
+                FontWeight="Bold"
+                Foreground="White"
+                Text="{Binding State.Main.Volume, Converter={StaticResource VolumeLabel}}" />
+        </Grid>
+
+        <!-- Surround mode -->
+        <TextBlock
+            Grid.Row="2"
+            Margin="0,0,0,6"
+            FontSize="12"
+            Foreground="{StaticResource TextSecondaryBrush}">
+            <Run Text="{Binding State.SurroundMode}" />
+            <Run Text=" Â· " />
+            <Run Text="{Binding State.AudioFormat}" />
+        </TextBlock>
+
+        <!-- Quick source buttons -->
+        <WrapPanel Grid.Row="3" Margin="0,8,0,0" Orientation="Horizontal">
+            <ui:Button
+                Margin="0,0,6,6"
+                Click="OnSourceClick"
+                Content="CD"
+                Tag="CD" />
+            <ui:Button
+                Margin="0,0,6,6"
+                Click="OnSourceClick"
+                Content="TV"
+                Tag="TV" />
+            <ui:Button
+                Margin="0,0,6,6"
+                Click="OnSourceClick"
+                Content="Game"
+                Tag="GAME" />
+            <ui:Button
+                Margin="0,0,6,6"
+                Click="OnSourceClick"
+                Content="BT"
+                Tag="BT" />
+            <ui:Button
+                Margin="0,0,6,6"
+                Click="OnSourceClick"
+                Content="HEOS"
+                Tag="NET" />
+        </WrapPanel>
+
+        <!-- Open full window link -->
+        <TextBlock
+            Grid.Row="4"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Cursor="Hand"
+            FontSize="11"
+            Foreground="{StaticResource AccentBrush}"
+            MouseLeftButtonUp="OnOpenFull"
+            Text="Abrir ventana completa â€º"
+            TextDecorations="Underline" />
+    </Grid>
+</ui:FluentWindow>
+
+

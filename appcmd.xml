@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rx>
+<cmd>
+<zone1>ON</zone1>
+<zone2>OFF</zone2>
+</cmd>
+<cmd>
+<zone1>
+<volume>-30.0</volume>
+<state>variable</state>
+<limit>OFF</limit>
+<disptype>ABSOLUTE</disptype>
+<dispvalue>50.0</dispvalue>
+</zone1>
+<zone2>
+<volume>-40</volume>
+<state>variable</state>
+<limit>-10.0</limit>
+<disptype>ABSOLUTE</disptype>
+<dispvalue> 40</dispvalue>
+</zone2>
+</cmd>
+<cmd>
+<zone1>off</zone1>
+<zone2>off</zone2>
+</cmd>
+<cmd>
+<zone1>
+<source>CD</source>
+</zone1>
+<zone2>
+<source>SAT/CBL</source>
+</zone2>
+</cmd>
+<cmd>
+<surround>Multi Ch Stereo                                                </surround>
+</cmd>
+<cmd>
+<functionrename>
+<list>
+<name>SOURCE</name>
+<rename>Source</rename>
+</list>
+<list>
+<name>CBL/SAT</name>
+<rename>SHIEL           </rename>
+</list>
+<list>
+<name>Media Player</name>
+<rename>ROG GAME        </rename>
+</list>
+<list>
+<name>Blu-ray</name>
+<rename>nintendo        </rename>
+</list>
+<list>
+<name>GAME1</name>
+<rename>Game            </rename>
+</list>
+<list>
+<name>AUX1</name>
+<rename>AUX1            </rename>
+</list>
+<list>
+<name>AUX2</name>
+<rename>AUX2            </rename>
+</list>
+<list>
+<name>TV AUDIO</name>
+<rename>TV Audio        </rename>
+</list>
+<list>
+<name>CD</name>
+<rename>CD              </rename>
+</list>
+<list>
+<name>PHONO</name>
+<rename>Phono           </rename>
+</list>
+<list>
+<name>TUNER</name>
+<rename>Tuner</rename>
+</list>
+<list>
+<name>NETWORK</name>
+<rename>HEOS Music</rename>
+</list>
+<list>
+<name>Bluetooth</name>
+<rename>Bluetooth</rename>
+</list>
+</functionrename>
+</cmd>
+<cmd>
+<functiondelete>
+<list>
+<name>CBL/SAT</name>
+<FuncName>CBL/SAT</FuncName>
+<use>1</use>
+</list>
+<list>
+<name>Media Player</name>
+<FuncName>Media Player</FuncName>
+<use>1</use>
+</list>
+<list>
+<name>Blu-ray</name>
+<FuncName>Blu-ray</FuncName>
+<use>1</use>
+</list>
+<list>
+<name>GAME1</name>
+<FuncName>GAME1</FuncName>
+<use>1</use>
+</list>
+<list>
+<name>AUX1</name>
+<FuncName>AUX1</FuncName>
+<use>1</use>
+</list>
+<list>
+<name>AUX2</name>
+<FuncName>AUX2</FuncName>
+<use>1</use>
+</list>
+<list>
+<name>TV AUDIO</name>
+<FuncName>TV AUDIO</FuncName>
+<use>1</use>
+</list>
+<list>
+<name>CD</name>
+<FuncName>CD</FuncName>
+<use>1</use>
+</list>
+<list>
+<name>PHONO</name>
+<FuncName>PHONO</FuncName>
+<use>0</use>
+</list>
+<list>
+<name>TUNER</name>
+<FuncName>TUNER</FuncName>
+<use>1</use>
+</list>
+<list>
+<name>NETWORK</name>
+<FuncName>NETWORK</FuncName>
+<use>1</use>
+</list>
+<list>
+<name>Bluetooth</name>
+<FuncName>Bluetooth</FuncName>
+<use>1</use>
+</list>
+</functiondelete>
+</cmd>
+<cmd>
+<status>1</status>
+<adjust>0</adjust>
+<basslevel>0dB</basslevel>
+<bassvalue>6</bassvalue>
+<treblelevel>0dB</treblelevel>
+<treblevalue>6</treblevalue>
+</cmd>
+

@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>DenonRemote</RootNamespace>
+    <AssemblyName>DenonDesktopControl</AssemblyName>
+    <Product>DENON Desktop Control</Product>
+    <Version>1.0.0</Version>
+    <Authors>Felipe (@felipedream)</Authors>
+    <Company>FelipeDream</Company>
+    <Description>DENON Desktop Control — Remote control for Denon and Marantz AVR receivers on Windows. Real-time telnet monitoring, channel matrix, per-speaker trim, system tray widget, auto-discovery.</Description>
+    <Copyright>© 2026 Felipe — Buin, Santiago de Chile — @felipedream</Copyright>
+    <RepositoryUrl>https://github.com/felipedream/denon-desktop-control</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/felipedream/denon-desktop-control</PackageProjectUrl>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="H.NotifyIcon.Wpf" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="WPF-UI" Version="3.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\**\*.ico" />
+    <Resource Include="Assets\**\*.png" />
+  </ItemGroup>
+
+</Project>

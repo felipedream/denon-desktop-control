@@ -1,0 +1,70 @@
+﻿<pages:PageBase
+    x:Class="DenonRemote.Views.Pages.ZonesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pages="clr-namespace:DenonRemote.Views.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    mc:Ignorable="d">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24" MaxWidth="900">
+            <TextBlock FontSize="28" FontWeight="Bold" Text="Zones" />
+            <TextBlock Margin="0,4,0,20" Opacity="0.7" Text="Independent audio for other rooms." />
+
+            <!-- â”€â”€ Main zone (mirror) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+            <Border Margin="0,0,0,16" Style="{StaticResource Card}">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock FontSize="18" FontWeight="SemiBold" Text="Main" />
+                            <TextBlock Opacity="0.6" Text="{Binding State.Main.SourceFriendly}" />
+                        </StackPanel>
+                        <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding State.Main.IsOn, Mode=OneWay}" IsEnabled="False" />
+                    </Grid>
+                    <Slider
+                        Margin="0,12,0,0"
+                        Maximum="{Binding State.Main.VolumeMax}"
+                        Minimum="0"
+                        SmallChange="0.5"
+                        TickFrequency="10"
+                        TickPlacement="BottomRight"
+                        Value="{Binding State.Main.Volume, Mode=TwoWay, Delay=250}" />
+                </StackPanel>
+            </Border>
+
+            <!-- â”€â”€ Zone 2 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock FontSize="18" FontWeight="SemiBold" Text="Zone 2" />
+                            <TextBlock Opacity="0.6" Text="{Binding State.Zone2.SourceFriendly}" />
+                        </StackPanel>
+                        <ui:ToggleSwitch Grid.Column="1" IsChecked="{Binding State.Zone2.IsOn, Mode=TwoWay}" />
+                    </Grid>
+                    <Slider
+                        Margin="0,12,0,0"
+                        IsEnabled="{Binding State.Zone2.IsOn}"
+                        Maximum="98"
+                        Minimum="0"
+                        SmallChange="0.5"
+                        TickFrequency="10"
+                        TickPlacement="BottomRight"
+                        Value="{Binding State.Zone2.Volume, Mode=TwoWay, Delay=250}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</pages:PageBase>
+
+
+
