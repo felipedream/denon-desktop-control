@@ -1,6 +1,6 @@
 ﻿[Setup]
 AppName=DENON Desktop Control
-AppVersion=1.0.0
+AppVersion=1.5.0
 AppPublisher=Felipe (@felipedream)
 AppPublisherURL=https://github.com/felipedream/denon-desktop-control
 AppSupportURL=https://t.me/felipedream
@@ -8,7 +8,7 @@ DefaultDirName={autopf}\DENON Desktop Control
 DefaultGroupName=DENON Desktop Control
 UninstallDisplayIcon={app}\DenonDesktopControl.exe
 OutputDir=..\installer\out
-OutputBaseFilename=DenonDesktopControl-1.0.0-Setup
+OutputBaseFilename=DenonDesktopControl-1.5.0-Setup
 Compression=lzma2/ultra64
 SolidCompression=yes
 ArchitecturesAllowed=x64compatible
@@ -37,4 +37,5 @@ Name: "startupicon"; Description: "Iniciar con Windows"; GroupDescription: "Opci
 
 [Run]
 Filename: "{app}\DenonDesktopControl.exe"; Description: "Ejecutar DENON Desktop Control"; Flags: nowait postinstall skipifsilent
+
 
