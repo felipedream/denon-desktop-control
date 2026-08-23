@@ -9,7 +9,7 @@
     <RootNamespace>DenonRemote</RootNamespace>
     <AssemblyName>DenonDesktopControl</AssemblyName>
     <Product>DENON Desktop Control</Product>
-    <Version>1.0.0</Version>
+    <Version>1.5.0</Version>
     <Authors>Felipe (@felipedream)</Authors>
     <Company>FelipeDream</Company>
     <Description>DENON Desktop Control — Remote control for Denon and Marantz AVR receivers on Windows. Real-time telnet monitoring, channel matrix, per-speaker trim, system tray widget, auto-discovery.</Description>
@@ -35,3 +35,4 @@
   </ItemGroup>
 
 </Project>
+

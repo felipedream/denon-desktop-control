@@ -69,12 +69,13 @@ public sealed class ReceiverService : IAsyncDisposable
         if (telnetOk)
         {
             await _telnet.SendManyAsync(
-                "PW?", "MV?", "MU?", "SI?", "MS?",
+                "ZM?", "MV?", "MU?", "SI?", "MS?",
                 "PSBAS ?", "PSTRE ?", "PSTONE CTRL ?", "PSSWL ?",
                 "SSINFAISFSV ?", "ECO?",
                 "Z2?", "NSFRN ?",
                 "CV?",
-                "SSFUN ?", "SSSOD ?"
+                "SSFUN ?", "SSSOD ?",
+                "SSSPC ?"                 // speaker configuration (which channels exist)
             ).ConfigureAwait(false);
         }
         else
@@ -146,21 +147,42 @@ public sealed class ReceiverService : IAsyncDisposable
                 {
                     var ok = await _telnet.ConnectAsync(token).ConfigureAwait(false);
                     if (ok)
-                        await _telnet.SendManyAsync("PW?", "MV?", "MU?", "SI?", "MS?", "Z2?");
+                        await _telnet.SendManyAsync("ZM?", "MV?", "MU?", "SI?", "MS?", "Z2?");
                     else
                         await HydrateFromHttpAsync(token).ConfigureAwait(false);
                 }
                 else
                 {
-                    await _telnet.SendAsync("PW?", token).ConfigureAwait(false);
+                    await _telnet.SendAsync("ZM?", token).ConfigureAwait(false);
                 }
             }
         }, token);
     }
 
     // â”€â”€ Commands â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-    public Task PowerOnAsync() => SendOrHttp("PWON");
-    public Task StandbyAsync() => SendOrHttp("PWSTANDBY");
+    /// <summary>
+    /// Powers on the MAIN zone only. We deliberately avoid <c>PWON</c> because
+    /// on Denon receivers that wakes every zone (including Zone 2), which is
+    /// not what the user expects when pressing the main power button.
+    /// </summary>
+    public async Task PowerOnAsync()
+    {
+        await SendOrHttp("ZMON").ConfigureAwait(false);
+        // Belt and braces: if the unit came out of standby it may have restored
+        // Zone 2, so force it off unless the user turns it on explicitly.
+        await SendOrHttp("Z2OFF").ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Turns the whole unit off. Zone 2 goes down with it, which matches the
+    /// expectation that Zone 2 never stays alive after Main is switched off.
+    /// </summary>
+    public async Task StandbyAsync()
+    {
+        await SendOrHttp("Z2OFF").ConfigureAwait(false);
+        await SendOrHttp("PWSTANDBY").ConfigureAwait(false);
+    }
+
     public async Task TogglePowerAsync()
     {
         if (State.Main.IsOn) await StandbyAsync();
@@ -204,6 +226,11 @@ public sealed class ReceiverService : IAsyncDisposable
     public Task SetChannelLevelAsync(string channel, double db)
     {
         if (!DenonProtocol.ChannelSupportsTrim(channel)) return Task.CompletedTask;
+
+        // Mute the receiver's echo for a moment so the slider stays where the
+        // user put it instead of bouncing when the confirmation arrives.
+        State.Channel(channel)?.SuppressEcho(TimeSpan.FromMilliseconds(700));
+
         var raw = 50 + Math.Round(Clamp(db, -12, 12) * 2, MidpointRounding.AwayFromZero) / 2.0;
         var whole = (int)Math.Floor(raw);
         var half = raw - whole >= 0.25;
@@ -244,4 +271,5 @@ public sealed class ReceiverService : IAsyncDisposable
         await DisconnectAsync().ConfigureAwait(false);
     }
 }
+
 

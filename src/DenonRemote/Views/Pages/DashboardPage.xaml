@@ -8,11 +8,15 @@
     xmlns:pages="clr-namespace:DenonRemote.Views.Pages"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     mc:Ignorable="d">
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="24" MaxWidth="1200">
+    <Grid Margin="20,16,20,16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
             <!-- ── Header ─────────────────────────────────────────────────── -->
-            <Grid Margin="0,0,0,20">
+            <Grid Grid.Row="0" Margin="0,0,0,14">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -52,7 +56,7 @@
             </Grid>
 
             <!-- ── Metrics strip (clickable cards) ─────────────────────────── -->
-            <UniformGrid Columns="4" Margin="0,0,0,20" Rows="1">
+            <UniformGrid Grid.Row="1" Columns="4" Margin="0,0,0,14" Rows="1">
                 <!-- Volume -->
                 <Border Margin="0,0,6,0" Style="{StaticResource Card}">
                     <StackPanel>
@@ -88,7 +92,7 @@
             </UniformGrid>
 
             <!-- ── Volume & Channel matrix row ────────────────────────────── -->
-            <Grid>
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -361,8 +365,9 @@
                     </StackPanel>
                 </Border>
             </Popup>
-        </StackPanel>
-    </ScrollViewer>
+        </Grid>
 </pages:PageBase>
+
+
 
 

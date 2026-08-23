@@ -21,6 +21,9 @@ public partial class SettingsPage : PageBase
     private void ApplyLocalization()
     {
         TitleText.Text = L.SettingsTitle;
+        SubtitleText.Text = L.IsSpanish
+            ? "Preferencias de la aplicacion"
+            : "Application preferences";
         AutoConnLabel.Text = L.SettingsAutoConnect;
         AutoConnDesc.Text = L.SettingsAutoConnectDesc;
         TrayLabel.Text = L.SettingsCloseToTray;
@@ -29,12 +32,15 @@ public partial class SettingsPage : PageBase
         MinDesc.Text = L.SettingsStartMinimizedDesc;
         UpdateLabel.Text = L.SettingsAutoUpdate;
         UpdateDesc.Text = L.SettingsAutoUpdateDesc;
+        UnitLabel.Text = L.SettingsVolumeUnit;
+        UnitDesc.Text = L.SettingsVolumeUnitDesc;
         FreeVersionText.Text = L.AboutFreeVersion;
         CreatedByLabel.Text = L.AboutCreatedBy.ToUpperInvariant();
         DonateBtn.Content = L.AboutDonate;
         TelegramBtn.Content = L.AboutTelegram;
-        VersionRun.Text = "v" + (DataContext is MainViewModel vm ? vm.Updater.CurrentVersion : "1.0.0");
-        UpdateAvailRun.Text = L.IsSpanish ? "Nueva versión: " : "New version: ";
+        VersionText.Text = "v" + (DataContext is MainViewModel vm ? vm.Updater.CurrentVersion : "1.0.0")
+                         + " · .NET 8 · WPF";
+        UpdateAvailRun.Text = L.IsSpanish ? "Nueva version:" : "New version:";
     }
 
     private void OnTelegramClick(object sender, RoutedEventArgs e) =>

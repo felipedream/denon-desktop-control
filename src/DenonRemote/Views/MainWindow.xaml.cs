@@ -28,7 +28,7 @@ public partial class MainWindow : FluentWindow
         NavHome.Content = L.Dashboard;
         NavSources.Content = L.Sources;
         NavSound.Content = L.Sound;
-        NavZones.Content = L.Zones;
+        NavHeos.Content = "HEOS";
         NavDevices.Content = L.Devices;
         NavSettings.Content = L.Settings;
         RecentLabel.Text = L.Recent;

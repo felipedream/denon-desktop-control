@@ -1,5 +1,5 @@
 ﻿{
-    "url":  "https://haussmed.cl/denon/DenonDesktopControl-1.0.0.zip",
-    "version":  "1.0.0",
-    "notes":  "Primera version. Control remoto completo para Denon/Marantz."
+    "url":  "https://haussmed.cl/denon/DenonDesktopControl-1.5.0.zip",
+    "version":  "1.5.0",
+    "notes":  "HEOS: navegacion Tidal/TuneIn, seek UPnP, cola, busqueda, caratula blur. Perfiles de sonido. Zona 2 corregida."
 }

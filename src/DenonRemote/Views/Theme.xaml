@@ -60,6 +60,21 @@
     <conv:VolumeLabelConverter x:Key="VolumeLabel" />
     <conv:NotNullToBoolConverter x:Key="NotNullToBool" />
     <conv:StringNotEmptyToVisibilityConverter x:Key="StringNotEmptyToVis" />
+    <conv:ZeroToVisibleConverter x:Key="ZeroToVisible" />
+    <conv:NotZeroToVisibleConverter x:Key="NotZeroToVisible" />
+    <conv:EmptyToVisibleConverter x:Key="EmptyToVisible" />
+    <conv:FolderIconConverter x:Key="FolderIcon" />
+    <conv:ViewWidthConverter x:Key="ViewWidth" />
+    <conv:ViewHeightConverter x:Key="ViewHeight" />
+    <conv:MuteIconConverter x:Key="MuteIcon" />
+    <conv:MuteBrushConverter x:Key="MuteBrush"
+                             MutedBrush="{StaticResource AccentBrush}"
+                             NormalBrush="{StaticResource TextPrimaryBrush}" />
+    <conv:PlayPauseIconConverter x:Key="PlayPauseIcon" />
+    <conv:HeosStatusConverter x:Key="HeosStatus" />
+    <conv:AvailableBrushConverter x:Key="AvailableBrush"
+                                  AvailableBrush="{StaticResource TextPrimaryBrush}"
+                                  UnavailableBrush="{StaticResource TextTertiaryBrush}" />
 
     <!-- ══════════ Typography ══════════ -->
     <FontFamily x:Key="UiFont">Segoe UI Variable, Segoe UI, Segoe UI Emoji</FontFamily>

@@ -2,76 +2,76 @@
     x:Class="DenonRemote.Views.Pages.ConnectPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:pages="clr-namespace:DenonRemote.Views.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:DenonRemote.Views.Pages"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    FontFamily="Segoe UI Variable, Segoe UI"
     mc:Ignorable="d">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid Margin="40,32,40,32" MaxWidth="720" HorizontalAlignment="Center">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
 
-            <!-- Hero -->
-            <StackPanel Grid.Row="0" Margin="0,0,0,24">
-                <TextBlock x:Name="HeroTitle" Style="{StaticResource H1}" Text="Add a receiver" />
-                <TextBlock
-                    Margin="0,6,0,0"
-                    x:Name="HeroSubtitle" Style="{StaticResource Subtitle}" Text="Any Denon or Marantz on the same network." />
-            </StackPanel>
+    <Grid Margin="20,16,20,16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <!-- Discovered devices card -->
-            <Border Grid.Row="1" Margin="0,0,0,16" Style="{StaticResource Card}">
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,14">
+            <TextBlock x:Name="HeroTitle" FontSize="26" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" />
+            <TextBlock x:Name="HeroSubtitle" Style="{StaticResource Subtitle}" />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="360" />
+            </Grid.ColumnDefinitions>
+
+            <!-- ── Discovered devices (only this list scrolls) ────────────── -->
+            <Border Grid.Column="0" Margin="0,0,6,0" Padding="18" Style="{StaticResource Card}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <!-- Header -->
-                    <Grid Grid.Row="0" Margin="0,0,0,14">
+                    <!-- Header row -->
+                    <Grid Grid.Row="0" Margin="0,0,0,12">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <StackPanel>
-                            <TextBlock x:Name="DiscTitle" Style="{StaticResource H2}" Text="Discovered devices" />
+                            <TextBlock x:Name="DiscTitle" FontSize="17" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
                             <TextBlock
-                                Margin="0,2,0,0"
-                                Style="{StaticResource Subtitle}"
+                                FontSize="12"
+                                Foreground="{StaticResource TextTertiaryBrush}"
                                 Text="{Binding StatusMessage}"
+                                TextTrimming="CharacterEllipsis"
                                 Visibility="{Binding StatusMessage, Converter={StaticResource StringNotEmptyToVis}}" />
                         </StackPanel>
                         <ui:Button
+                            x:Name="RescanBtn"
                             Grid.Column="1"
                             VerticalAlignment="Center"
                             Command="{Binding RefreshDevicesCommand}"
-                            Content="Rescan"
-                            Icon="{ui:SymbolIcon ArrowSync24}"
-                            IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBoolToVis}}" />
+                            Icon="{ui:SymbolIcon ArrowSync24}" />
                     </Grid>
 
-                    <!-- Device list -->
+                    <!-- Device list: the only scrollable region on the page -->
                     <ListBox
                         Grid.Row="1"
-                        MinHeight="180"
                         Background="Transparent"
                         BorderThickness="0"
                         ItemsSource="{Binding Devices}"
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                        SelectedItem="{Binding SelectedDevice}"
-                        Visibility="{Binding Devices.Count, Converter={StaticResource NotNullToBool}}">
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        SelectedItem="{Binding SelectedDevice}">
                         <ListBox.Resources>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Padding" Value="10" />
-                                <Setter Property="Margin" Value="0,4" />
+                                <Setter Property="Margin" Value="0,3" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListBoxItem">
@@ -107,25 +107,22 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Border
-                                        Width="44"
-                                        Height="44"
+                                        Width="40"
+                                        Height="40"
                                         VerticalAlignment="Center"
                                         Background="{StaticResource AccentBrush}"
                                         CornerRadius="10">
-                                        <ui:SymbolIcon
-                                            Foreground="White"
-                                            FontSize="22"
-                                            Symbol="Speaker224" />
+                                        <ui:SymbolIcon FontSize="20" Foreground="White" Symbol="Speaker224" />
                                     </Border>
-                                    <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
                                         <TextBlock
-                                            FontSize="15"
+                                            FontSize="14"
                                             FontWeight="SemiBold"
                                             Foreground="{StaticResource TextPrimaryBrush}"
                                             Text="{Binding FriendlyName}" />
-                                        <TextBlock FontSize="12" Foreground="{StaticResource TextSecondaryBrush}">
+                                        <TextBlock FontSize="11" Foreground="{StaticResource TextSecondaryBrush}">
                                             <Run Text="{Binding Model}" />
-                                            <Run Text=" Â· " />
+                                            <Run Text=" - " />
                                             <Run Text="{Binding Host}" />
                                         </TextBlock>
                                     </StackPanel>
@@ -134,10 +131,9 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <!-- Empty state -->
+                    <!-- Empty state overlays the list area when nothing found -->
                     <StackPanel
                         Grid.Row="1"
-                        Height="180"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                         <StackPanel.Style>
@@ -151,102 +147,89 @@
                             </Style>
                         </StackPanel.Style>
                         <Border
-                            Width="72"
-                            Height="72"
+                            Width="64"
+                            Height="64"
                             Background="{StaticResource Surface2Brush}"
-                            CornerRadius="36">
-                            <ui:SymbolIcon
-                                FontSize="34"
-                                Foreground="{StaticResource TextTertiaryBrush}"
-                                Symbol="Speaker224" />
+                            CornerRadius="32">
+                            <ui:SymbolIcon FontSize="30" Foreground="{StaticResource TextTertiaryBrush}" Symbol="Speaker224" />
                         </Border>
                         <TextBlock
-                            Margin="0,14,0,0"
+                            x:Name="EmptyTitle"
+                            Margin="0,12,0,0"
                             HorizontalAlignment="Center"
-                            FontSize="14"
+                            FontSize="13"
                             FontWeight="SemiBold"
-                            Foreground="{StaticResource TextPrimaryBrush}"
-                            Text="Nothing here yet" />
+                            Foreground="{StaticResource TextPrimaryBrush}" />
                         <TextBlock
-                            Margin="0,4,0,0"
+                            x:Name="EmptyDesc"
+                            Margin="0,3,0,0"
                             HorizontalAlignment="Center"
-                            FontSize="12"
-                            Foreground="{StaticResource TextSecondaryBrush}"
-                            Text="Press Rescan or add the IP manually below." />
+                            FontSize="11"
+                            Foreground="{StaticResource TextSecondaryBrush}" />
                     </StackPanel>
 
-                    <!-- Connect button -->
                     <ui:Button
+                        x:Name="ConnectBtn"
                         Grid.Row="2"
-                        Margin="0,14,0,0"
+                        Margin="0,12,0,0"
                         HorizontalAlignment="Right"
                         Appearance="Primary"
                         Command="{Binding ConnectCommand}"
-                        Content="Connect"
                         Icon="{ui:SymbolIcon PlugConnected24}"
                         IsEnabled="{Binding SelectedDevice, Converter={StaticResource NotNullToBool}}" />
                 </Grid>
             </Border>
 
-            <!-- Add manually -->
-            <Border Grid.Row="2" Margin="0,0,0,16" Style="{StaticResource Card}">
-                <StackPanel>
-                    <TextBlock x:Name="IpTitle" Style="{StaticResource H2}" Text="Add by IP" />
-                    <TextBlock
-                        Margin="0,2,0,14"
-                        x:Name="IpDesc" Style="{StaticResource Subtitle}" Text="Type the receiver's IP if it didn't appear above." />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+            <!-- ── Right column: add by IP + help ────────────────────────── -->
+            <StackPanel Grid.Column="1" Margin="6,0,0,0">
+                <Border Margin="0,0,0,12" Padding="18" Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock x:Name="IpTitle" FontSize="17" FontWeight="SemiBold" Foreground="{StaticResource TextPrimaryBrush}" />
+                        <TextBlock x:Name="IpDesc" Margin="0,2,0,12" FontSize="12" Foreground="{StaticResource TextTertiaryBrush}" TextWrapping="Wrap" />
                         <ui:TextBox
-                            Padding="12,10"
-                            FontSize="14"
-                            PlaceholderText="e.g. 192.168.1.82"
+                            Margin="0,0,0,8"
+                            Padding="11,9"
+                            FontSize="13"
+                            PlaceholderText="192.168.1.82"
                             Text="{Binding ManualHost, UpdateSourceTrigger=PropertyChanged}">
                             <ui:TextBox.InputBindings>
-                                <KeyBinding Command="{Binding AddManualCommand}" Key="Return" />
+                                <KeyBinding Key="Return" Command="{Binding AddManualCommand}" />
                             </ui:TextBox.InputBindings>
                         </ui:TextBox>
                         <ui:Button
-                            Grid.Column="1"
-                            Margin="10,0,0,0"
+                            x:Name="AddBtn"
+                            HorizontalAlignment="Stretch"
                             Appearance="Primary"
                             Command="{Binding AddManualCommand}"
-                            Content="Add and connect"
                             Icon="{ui:SymbolIcon Add24}" />
-                    </Grid>
-                </StackPanel>
-            </Border>
-
-            <!-- Helper hint -->
-            <Border Grid.Row="3" Style="{StaticResource InsetCard}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <ui:SymbolIcon
-                        VerticalAlignment="Top"
-                        FontSize="20"
-                        Foreground="{StaticResource AccentBrush}"
-                        Symbol="Info24" />
-                    <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                        <TextBlock x:Name="HelpTitle" Style="{StaticResource Body}" Text="Doesn't show up?" />
-                        <TextBlock
-                            Margin="0,4,0,0"
-                            x:Name="HelpDesc"
-                            Style="{StaticResource Subtitle}"
-                            TextWrapping="Wrap"
-                            Text="Make sure Network Standby is enabled on the receiver, and that your PC and the AVR are on the same subnet. UPnP / SSDP is used for discovery." />
                     </StackPanel>
-                </Grid>
-            </Border>
+                </Border>
+
+                <Border Padding="16" Style="{StaticResource InsetCard}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="{StaticResource AccentBrush}"
+                                Symbol="Info24" />
+                            <TextBlock
+                                x:Name="HelpTitle"
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="13"
+                                FontWeight="SemiBold"
+                                Foreground="{StaticResource TextPrimaryBrush}" />
+                        </StackPanel>
+                        <TextBlock
+                            x:Name="HelpDesc"
+                            Margin="0,8,0,0"
+                            FontSize="11"
+                            Foreground="{StaticResource TextSecondaryBrush}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
         </Grid>
-    </ScrollViewer>
+    </Grid>
 </pages:PageBase>
-
-
-
-

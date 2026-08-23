@@ -25,8 +25,16 @@ public sealed class DenonEventParser
     {
         var s = line.TrimEnd();
 
-        if (s == "PWON") { _state.Main.IsOn = true; return; }
-        if (s == "PWSTANDBY") { _state.Main.IsOn = false; _state.Zone2.IsOn = false; return; }
+        // Power. Note: PW reports ON when ANY zone is on, so it is NOT the
+        // main-zone state. ZM (Zone Main) is the authoritative main power flag.
+        if (s == "PWSTANDBY")
+        {
+            // Whole unit asleep: every zone is off.
+            _state.Main.IsOn = false;
+            _state.Zone2.IsOn = false;
+            return;
+        }
+        if (s == "PWON") return;                       // ignore: ambiguous
         if (s == "ZMON") { _state.Main.IsOn = true; return; }
         if (s == "ZMOFF") { _state.Main.IsOn = false; return; }
         if (s == "Z2ON") { _state.Zone2.IsOn = true; return; }
@@ -154,7 +162,9 @@ public sealed class DenonEventParser
                 if (parsed is not null)
                 {
                     var target = _state.Channel(channel);
-                    if (target is not null)
+                    // Skip the echo of a command we just sent, otherwise the
+                    // slider the user is dragging gets yanked back and forth.
+                    if (target is not null && !target.IsEchoSuppressed)
                         target.LevelDb = parsed.Value - 50;
                 }
             }
@@ -211,9 +221,19 @@ public sealed class DenonEventParser
         var channels = _state.Channels;
         for (int i = 0; i < payload.Length && i < channels.Count; i++)
         {
-            var active = payload[i] == '2';
-            if (input) channels[i].IsInputActive = active;
-            else channels[i].IsSpeakerActive = active;
+            var c = payload[i];
+            var active = c == '2';
+            var present = c == '1' || c == '2';
+
+            if (input)
+            {
+                channels[i].IsInputActive = active;
+            }
+            else
+            {
+                channels[i].IsSpeakerActive = active;
+                channels[i].IsSpeakerPresent = present;
+            }
         }
     }
 

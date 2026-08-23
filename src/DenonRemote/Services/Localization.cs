@@ -48,6 +48,10 @@ public static class L
     public static string SettingsAutoUpdateDesc => IsSpanish
         ? "Busca nuevas versiones al iniciar desde haussmed.cl."
         : "Checks for new versions at startup from haussmed.cl.";
+    public static string SettingsVolumeUnit => IsSpanish ? "Unidad de volumen" : "Volume unit";
+    public static string SettingsVolumeUnitDesc => IsSpanish
+        ? "Como se muestra el volumen principal."
+        : "How the master volume is displayed.";
 
     // -- Navigation --
     public static string Devices => IsSpanish ? "Dispositivos" : "Devices";

@@ -72,9 +72,9 @@
                         <ui:SymbolIcon Symbol="MusicNote124" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem x:Name="NavZones" TargetPageType="{x:Type pages:ZonesPage}">
+                <ui:NavigationViewItem x:Name="NavHeos" TargetPageType="{x:Type pages:HeosPage}">
                     <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="Speaker224" />
+                        <ui:SymbolIcon Symbol="MusicNote224" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
                 <ui:NavigationViewItem x:Name="NavDevices" TargetPageType="{x:Type pages:ConnectPage}">
@@ -225,22 +225,33 @@
                         Minimum="0"
                         SmallChange="0.5"
                         Value="{Binding State.Main.Volume, Mode=TwoWay, Delay=200}" />
-                    <TextBlock
-                        Grid.Column="2"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Foreground="{StaticResource TextPrimaryBrush}"
-                        Text="{Binding State.Main.Volume, Converter={StaticResource VolumeLabel}}" />
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <TextBlock
+                            HorizontalAlignment="Right"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Foreground="{Binding State.Main.IsMuted, Converter={StaticResource MuteBrush}}"
+                            Text="{Binding State.Main.Volume, Converter={StaticResource VolumeLabel}}" />
+                        <TextBlock
+                            HorizontalAlignment="Right"
+                            FontSize="9"
+                            FontWeight="Bold"
+                            Foreground="{StaticResource AccentBrush}"
+                            Text="MUTE"
+                            Visibility="{Binding State.Main.IsMuted, Converter={StaticResource BoolToVis}}" />
+                    </StackPanel>
                 </Grid>
 
                 <ui:Button
                     Grid.Column="2"
                     Margin="0,0,8,0"
                     Command="{Binding MuteToggleCommand}"
-                    Icon="{ui:SymbolIcon SpeakerMute24}"
-                    ToolTip="Mute (toggle)" />
+                    ToolTip="Silenciar / Reactivar">
+                    <ui:SymbolIcon
+                        FontSize="18"
+                        Foreground="{Binding State.Main.IsMuted, Converter={StaticResource MuteBrush}}"
+                        Symbol="{Binding State.Main.IsMuted, Converter={StaticResource MuteIcon}}" />
+                </ui:Button>
                 <ui:Button
                     Grid.Column="3"
                     Appearance="Primary"
